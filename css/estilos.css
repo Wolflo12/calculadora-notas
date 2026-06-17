@@ -1,0 +1,140 @@
+/* =========================================
+   estilos.css — Calculadora de Notas Finales
+   Proyecto Web 2025
+   ========================================= */
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background-color:#0f0f0f;color:#e0e0e0;font-size:16px;line-height:1.6;min-height:100vh}
+
+/* ENCABEZADO */
+header{background:#1a1a1a;border-bottom:1px solid #2a2a2a;padding:1.5rem 2rem;text-align:center}
+header h1{font-size:24px;font-weight:600;color:#fff;margin-bottom:4px}
+header .subtitulo{font-size:14px;color:#888}
+
+/* NAVEGACIÓN */
+nav{display:flex;gap:6px;padding:1rem 2rem;background:#141414;border-bottom:1px solid #2a2a2a;flex-wrap:wrap}
+.nav-btn{background:transparent;border:1px solid #2a2a2a;color:#888;padding:7px 14px;font-size:13px;border-radius:8px;cursor:pointer;transition:all .2s;white-space:nowrap}
+.nav-btn:hover{background:#1f1f1f;color:#ccc}
+.nav-btn.active{background:#1f1f1f;color:#fff;border-color:#444}
+
+/* MAIN */
+main{max-width:700px;margin:2rem auto;padding:0 1.5rem}
+
+/* SECCIONES */
+.seccion{display:none}
+.seccion.activa{display:block}
+h2{font-size:18px;font-weight:500;margin-bottom:1rem;color:#fff}
+
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:1.5rem}
+.stat-card{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:10px;padding:1rem;text-align:center;display:flex;flex-direction:column;gap:4px}
+.stat-val{font-size:26px;font-weight:600;color:#fff}
+.stat-lbl{font-size:12px;color:#666}
+
+/* CARD */
+.card{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:10px;padding:1.25rem;margin-bottom:1rem}
+.card-title{font-size:13px;font-weight:500;color:#aaa;margin-bottom:.75rem}
+
+/* MOTIVACIONAL */
+.motiv{border-radius:10px;padding:.75rem 1rem;margin-bottom:1rem;font-size:14px;font-weight:500}
+.motiv-ok{background:#0f3d2a;color:#4ade80}
+.motiv-wn{background:#3d2e0a;color:#fbbf24}
+.motiv-bd{background:#3d0f0f;color:#f87171}
+
+/* FORMULARIO */
+.form-group{margin-bottom:1rem}
+.form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+label{display:block;font-size:13px;color:#888;margin-bottom:6px}
+.peso-tag{font-size:11px;color:#555;float:right;margin-top:2px}
+input[type="text"],input[type="number"],select{width:100%;padding:9px 12px;font-size:14px;background:#1a1a1a;color:#e0e0e0;border:1px solid #2a2a2a;border-radius:8px;outline:none;transition:border-color .2s}
+input:focus,select:focus{border-color:#555}
+input[type="range"]{padding:0;height:auto;accent-color:#7ec8f7}
+
+/* SEG CONTROL */
+.seg-control{display:flex;border:1px solid #2a2a2a;border-radius:8px;overflow:hidden;margin-bottom:1rem}
+.seg-btn{flex:1;padding:8px;font-size:13px;border:none;background:transparent;color:#666;cursor:pointer;transition:all .15s}
+.seg-btn.active{background:#1f1f1f;color:#fff;font-weight:500}
+
+/* ERRORES */
+.error{display:none;font-size:12px;color:#e05252;margin-top:4px}
+
+/* PREVIEW */
+.preview-box{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:10px;padding:1.25rem;text-align:center;margin-top:1rem}
+.preview-label{font-size:13px;color:#666;margin-bottom:8px}
+.preview-nota{font-size:36px;font-weight:600;color:#fff;margin-bottom:8px}
+.barra-cont{height:6px;background:#2a2a2a;border-radius:3px;margin-top:12px;overflow:hidden}
+.barra-fill{height:100%;border-radius:3px;width:0%;transition:width .4s}
+
+/* DESGLOSE */
+.desglose{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px;margin-top:10px}
+.des-item{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;padding:.6rem .75rem;font-size:13px}
+.des-val{font-weight:600;color:#fff;font-size:15px}
+.des-lbl{font-size:11px;color:#555;margin-top:2px}
+
+/* WARN BOXES */
+.warn-box{border-radius:10px;padding:.75rem;margin-top:.75rem;font-size:13px;font-weight:500}
+.warn-ok{background:#0f3d2a;color:#4ade80}
+.warn-bad{background:#3d0f0f;color:#f87171}
+.warn-med{background:#3d2e0a;color:#fbbf24}
+
+/* INFO MSG */
+.info-msg{font-size:13px;color:#888;background:#1a1a1a;border-radius:8px;padding:.75rem;margin-bottom:.75rem}
+
+/* TABLA SORT */
+.sort-btn{padding:5px 12px;font-size:12px;border:1px solid #2a2a2a;border-radius:8px;background:transparent;color:#666;cursor:pointer;transition:all .2s}
+.sort-btn.active{background:#1f1f1f;color:#fff}
+
+/* LISTA DE MATERIAS */
+.materia-item{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #222;font-size:14px}
+.materia-item:last-child{border-bottom:none}
+.mat-nombre{font-weight:500;color:#e0e0e0}
+.mat-detalle{font-size:12px;color:#555;margin-top:2px}
+.nota-pill{padding:3px 12px;border-radius:8px;font-size:13px;font-weight:600}
+.btn-borrar{background:transparent;border:1px solid #2a2a2a;color:#666;padding:4px 10px;border-radius:6px;font-size:12px;cursor:pointer;margin-left:8px;transition:all .2s}
+.btn-borrar:hover{background:#3d0f0f;color:#f87171;border-color:#5c1a1a}
+
+/* SEMESTRES */
+.sem-item{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #222}
+.sem-item:last-child{border-bottom:none}
+
+/* BADGES */
+.badge{display:inline-block;padding:4px 14px;border-radius:8px;font-size:12px;font-weight:500;margin-top:6px}
+.badge-ok{background:#0f3d2a;color:#4ade80}
+.badge-wn{background:#3d2e0a;color:#fbbf24}
+.badge-ml{background:#3d0f0f;color:#f87171}
+.badge-activo{background:#0f3d2a;color:#4ade80;font-size:11px;padding:2px 8px}
+
+/* BOTONES */
+.btn-group{display:flex;gap:10px;margin-top:1.25rem}
+.btn{flex:1;padding:10px 16px;font-size:14px;border-radius:8px;border:1px solid #2a2a2a;background:transparent;color:#ccc;cursor:pointer;transition:all .2s}
+.btn:hover{background:#1f1f1f;color:#fff}
+.btn-primary{background:#1a3a5c;color:#7ec8f7;border-color:#1e5080}
+.btn-primary:hover{background:#1e4a73}
+.btn-danger{background:#3d0f0f;color:#f87171;border-color:#5c1a1a}
+.btn-danger:hover{background:#4d1414}
+.btn-success{background:#0f3d2a;color:#4ade80;border-color:#1a5c3a}
+.btn-success:hover{background:#154d33}
+
+/* VACÍO */
+.vacio{text-align:center;padding:2.5rem 1rem;color:#555;font-size:14px;display:flex;flex-direction:column;align-items:center;gap:1rem}
+
+/* POND TABLE */
+.pond-table{width:100%;font-size:13px;color:#888;border-collapse:collapse}
+.pond-table td{padding:5px 0}
+.pond-val{text-align:right;font-weight:600;color:#fff}
+
+/* UTILIDADES */
+.oculto{display:none}
+
+/* FOOTER */
+footer{text-align:center;padding:2rem;font-size:13px;color:#444;border-top:1px solid #1f1f1f;margin-top:3rem}
+
+/* RESPONSIVE */
+@media(max-width:520px){
+  header h1{font-size:18px}
+  nav{padding:.75rem 1rem}
+  main{padding:0 1rem}
+  .form-row-2,.form-row-3{grid-template-columns:1fr}
+  .btn-group{flex-direction:column}
+  .desglose{grid-template-columns:1fr 1fr}
+}
