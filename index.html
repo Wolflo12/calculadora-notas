@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calculadora de Notas Finales</title>
+  <link rel="stylesheet" href="css/estilos.css"/>
+</head>
+<body>
+
+<header>
+  <h1>🎓 Calculadora de Notas Finales</h1>
+  <p class="subtitulo">Parciales 60% · Examen Final 40% · Aprobación ≥ 60 puntos</p>
+</header>
+
+<nav>
+  <button class="nav-btn active" onclick="go('inicio')" id="nav-inicio">Inicio</button>
+  <button class="nav-btn" onclick="go('ingresar')" id="nav-ingresar">Ingresar nota</button>
+  <button class="nav-btn" onclick="go('aprobar')" id="nav-aprobar">¿Puedo aprobar?</button>
+  <button class="nav-btn" onclick="go('resumen')" id="nav-resumen">Resumen</button>
+  <button class="nav-btn" onclick="go('semestres')" id="nav-semestres">Semestres</button>
+</nav>
+
+<main>
+
+  <!-- SECCIÓN 1: INICIO -->
+  <section id="s-inicio" class="seccion activa">
+    <h2>Bienvenido/a</h2>
+    <div id="motiv-home"></div>
+    <div class="stats-grid">
+      <div class="stat-card"><span class="stat-val" id="h-count">0</span><span class="stat-lbl">Materias</span></div>
+      <div class="stat-card"><span class="stat-val" id="h-prom">—</span><span class="stat-lbl">Promedio</span></div>
+      <div class="stat-card"><span class="stat-val" id="h-apro">0</span><span class="stat-lbl">Aprobadas</span></div>
+      <div class="stat-card"><span class="stat-val" id="h-repr">0</span><span class="stat-lbl">Reprobadas</span></div>
+    </div>
+    <div class="card">
+      <p class="card-title">Semestre activo</p>
+      <p id="h-sem" style="font-size:15px;font-weight:500;color:#e0e0e0">(ninguno activo)</p>
+    </div>
+    <div class="card">
+      <p class="card-title">Ponderación</p>
+      <table class="pond-table">
+        <tr><td>2 parciales (30% c/u) + Examen Final</td><td class="pond-val">60% + 40%</td></tr>
+        <tr><td>3 parciales (20% c/u) + Examen Final</td><td class="pond-val">60% + 40%</td></tr>
+      </table>
+    </div>
+    <button class="btn btn-primary" onclick="go('ingresar')" style="width:100%">+ Agregar materia</button>
+  </section>
+
+  <!-- SECCIÓN 2: INGRESAR NOTA -->
+  <section id="s-ingresar" class="seccion">
+    <h2>Ingresar nota</h2>
+    <form onsubmit="return false;">
+      <div class="form-group">
+        <label>Semestre</label>
+        <input type="text" id="inp-sem" list="sem-dl" placeholder="Ej: 1er Semestre 2025">
+        <datalist id="sem-dl"></datalist>
+      </div>
+      <div class="form-group">
+        <label>Nombre de la materia</label>
+        <input type="text" id="inp-mat" placeholder="Ej: Programación Web" maxlength="50">
+        <span class="error" id="er-mat">Ingresá el nombre de la materia.</span>
+      </div>
+      <div class="form-group">
+        <label>Cantidad de parciales</label>
+        <div class="seg-control">
+          <button type="button" class="seg-btn active" onclick="setP(2)" id="sb2">2 parciales</button>
+          <button type="button" class="seg-btn" onclick="setP(3)" id="sb3">3 parciales</button>
+        </div>
+      </div>
+      <div id="campos-p"></div>
+      <div class="form-group">
+        <label>Examen Final (0 – 100) <span class="peso-tag">40% de la nota final</span></label>
+        <input type="number" id="inp-ef" min="0" max="100" step="0.1" placeholder="0 – 100">
+        <span class="error" id="er-ef">Debe ser entre 0 y 100.</span>
+      </div>
+      <div id="prev-box" class="oculto">
+        <div class="preview-box">
+          <p class="preview-label">Nota final calculada</p>
+          <p class="preview-nota" id="prev-nota">—</p>
+          <div id="prev-bdg"></div>
+          <div class="barra-cont"><div class="barra-fill" id="prev-bar"></div></div>
+        </div>
+        <div class="desglose" id="prev-des"></div>
+      </div>
+      <div class="btn-group">
+        <button type="button" class="btn" onclick="doPreview()">👁 Calcular</button>
+        <button type="button" class="btn btn-primary" onclick="doGuardar()">✓ Guardar materia</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- SECCIÓN 3: ¿PUEDO APROBAR? -->
+  <section id="s-aprobar" class="seccion">
+    <h2>¿Puedo aprobar?</h2>
+    <div class="card">
+      <p class="info-msg">ℹ Ingresá tus notas de parciales para calcular qué necesitás en el examen final.</p>
+      <div class="form-group">
+        <label>Cantidad de parciales</label>
+        <div class="seg-control">
+          <button type="button" class="seg-btn active" onclick="setAP(2)" id="ap2">2 parciales</button>
+          <button type="button" class="seg-btn" onclick="setAP(3)" id="ap3">3 parciales</button>
+        </div>
+      </div>
+      <div id="campos-ap"></div>
+      <button type="button" class="btn btn-primary" style="width:100%;margin-top:.5rem" onclick="doCalcAp()">🧮 Calcular</button>
+    </div>
+    <div id="ap-res" class="oculto">
+      <div class="card">
+        <div class="stats-grid">
+          <div class="stat-card"><span class="stat-val" id="ap-psum">—</span><span class="stat-lbl">Pts. parciales</span></div>
+          <div class="stat-card"><span class="stat-val" id="ap-efmin">—</span><span class="stat-lbl">EF mínimo</span></div>
+          <div class="stat-card"><span class="stat-val" id="ap-rest">—</span><span class="stat-lbl">Pts. restantes</span></div>
+        </div>
+        <div id="ap-msg"></div>
+        <div id="ap-sim" style="margin-top:1rem">
+          <p class="card-title">Simulador — ¿y si saco...?</p>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:.5rem">
+            <input type="range" id="ap-slider" min="0" max="100" step="1" value="60" style="flex:1" oninput="doSim()">
+            <span id="ap-slv" style="font-size:14px;font-weight:500;min-width:32px;text-align:right">60</span>
+          </div>
+          <div class="preview-box" style="padding:.75rem">
+            <p class="preview-label">Nota final si EF = <span id="ap-sef">60</span></p>
+            <p class="preview-nota" id="ap-snota" style="font-size:28px">—</p>
+            <div id="ap-sbdg"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN 4: RESUMEN -->
+  <section id="s-resumen" class="seccion">
+    <h2>Resumen del semestre</h2>
+    <div id="res-empty" class="vacio"><p>📚 Aún no hay materias cargadas.</p><button class="btn btn-primary" onclick="go('ingresar')">+ Agregar primera materia</button></div>
+    <div id="res-content" class="oculto">
+      <div id="res-motiv"></div>
+      <div class="stats-grid">
+        <div class="stat-card"><span class="stat-val" id="r-prom">—</span><span class="stat-lbl">Promedio</span></div>
+        <div class="stat-card"><span class="stat-val" id="r-total">0</span><span class="stat-lbl">Materias</span></div>
+        <div class="stat-card"><span class="stat-val" id="r-apro">0</span><span class="stat-lbl">Aprobadas</span></div>
+        <div class="stat-card"><span class="stat-val" id="r-repr">0</span><span class="stat-lbl">Reprobadas</span></div>
+      </div>
+      <div class="card">
+        <p class="card-title">Notas por materia</p>
+        <div style="position:relative;width:100%;height:260px;margin:.75rem 0">
+          <canvas id="chart-c" role="img" aria-label="Gráfico de barras con notas por materia"></canvas>
+        </div>
+      </div>
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem;flex-wrap:wrap;gap:6px">
+          <p class="card-title" style="margin:0">Detalle</p>
+          <div style="display:flex;gap:6px">
+            <button class="sort-btn active" id="srt-az" onclick="setSort('az')">A–Z</button>
+            <button class="sort-btn" id="srt-hl" onclick="setSort('hl')">↓ Mayor</button>
+            <button class="sort-btn" id="srt-lh" onclick="setSort('lh')">↑ Menor</button>
+          </div>
+        </div>
+        <div id="res-lista"></div>
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-success" onclick="doExportPDF()">⬇ Exportar PDF</button>
+        <button class="btn btn-danger" onclick="doClear()">🗑 Limpiar semestre</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN 5: SEMESTRES -->
+  <section id="s-semestres" class="seccion">
+    <h2>Historial de semestres</h2>
+    <div id="sems-empty" class="vacio"><p>📅 No hay semestres guardados aún.</p></div>
+    <div id="sems-cont" class="oculto">
+      <div class="card"><div id="sems-items"></div></div>
+    </div>
+    <div id="sem-det" class="oculto" style="margin-top:1rem">
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem">
+          <p class="card-title" style="margin:0" id="sem-det-ttl">—</p>
+          <button class="btn" style="padding:4px 12px;font-size:12px" onclick="closeDet()">✕ Cerrar</button>
+        </div>
+        <div id="sem-det-body"></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer><p>Calculadora de Notas Finales &mdash; Proyecto Web &mdash; 2025</p></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
