@@ -1,6 +1,6 @@
 // =========================================
 // app.js — Calculadora de Notas Finales
-// Proyecto Web 2025
+// Proyecto Web 2026
 // Sistema: Parciales 0-100 · EF 0-100
 // 2 parciales: 30%+30%+40% | 3 parciales: 20%+20%+20%+40%
 // Aprobación: nota >= 60
